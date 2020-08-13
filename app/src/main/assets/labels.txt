@@ -1,0 +1,120 @@
+0 Chihuahua
+1 Japanese Spaniel
+2 Maltese Dog
+3 Pekinese
+4 Shih-Tzu
+5 Blenheim Spaniel
+6 Papillon
+7 Toy-terrier
+8 Rhodesian-ridgeback
+9 Afghan-hound
+10 Basset
+11 Beagle
+12 Bloodhound
+13 Bluetick
+14 Black and tan coonhound
+15 Walker hound
+16 English foxhound
+17 Redbone
+18 Borzoi
+19 Irish wolfhound
+20 Italian greyhound
+21 Whippet
+22 Ibizan hound
+23 Norwegian elkhound
+24 Otterhound
+25 Saluki
+26 Scottish deerhound
+27 Weimaraner
+28 Staffordshire bullterrier
+29 American Staffordshire terrier
+30 Bedlington terrier
+31 Border terrier
+32 Kerry blue terrier
+33 Irish terrier
+34 Norfolk terrier
+35 Norwich terrier
+36 Yorkshire terrier
+37 Wirehaired fox terrier
+38 Lakeland terrier
+39 Sealyham terrier
+40 Airedale
+41 Cairn
+42 Australian terrier
+43 Dandie Dinmont
+44 Boston bull
+45 Miniature schnauzer
+46 Giant schnauzer
+47 Standard schnauzer
+48 Scotch terrier
+49 Tibetan terrier
+50 Silky terrier
+51 Soft-coated wheaten terrier
+52 West Highland white terrier
+53 Lhasa
+54 Flat-coated retriever
+55 Curly-coated retriever
+56 Golden retriever
+57 Labrador retriever
+58 Chesapeake Bay retriever
+59 German short-haired pointer
+60 Vizsla
+61 English setter
+62 Irish setter
+63 Gordon setter
+64 Brittany spaniel
+65 Clumber
+66 English springer
+67 Welsh springer spaniel
+68 Cocker spaniel
+69 Sussex spaniel
+70 Irish water spaniel
+71 Kuvasz
+72 Schipperke
+73 Groenendael
+74 Malinois
+75 Briard
+76 Kelpie
+77 Komondor
+78 Old English sheepdog
+79 Shetland sheepdog
+80 Collie
+81 Border collie
+82 Bouvier des Flandres
+83 Rottweiler
+84 German shepherd
+85 Doberman
+86 Miniature pinscher
+87 Greater Swiss Mountain dog
+88 Bernese mountain dog
+89 Appenzeller
+90 EntleBucher
+91 Boxer
+92 Bull mastiff
+93 Tibetan mastiff
+94 French bulldog
+95 Great Dane
+96 Saint Bernard
+97 Eskimo dog
+98 Malamute
+99 Siberian husky
+100 Affenpinscher
+101 Basenji
+102 Pug
+103 Leonberg
+104 Newfoundland
+105 Great Pyrenees
+106 Samoyed
+107 Pomeranian
+108 Chow
+109 Keeshond
+110 Brabancon griffon
+111 Pembroke
+112 Cardigan
+113 Toy poodle
+114 Miniature poodle
+115 Standard poodle
+116 Mexican hairless
+117 Dingo
+118 Dhole
+119 African hunting dog
