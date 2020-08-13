@@ -24,6 +24,8 @@ import java.nio.MappedByteBuffer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
+import org.tensorflow.lite.examples.classification.tflite.Classifier;
+import org.tensorflow.lite.examples.classification.tflite.ClassifierFloatEfficientNet;
 import org.tensorflow.lite.support.common.FileUtil;
 import org.tensorflow.lite.support.image.ImageProcessor;
 import org.tensorflow.lite.support.image.TensorImage;
@@ -33,8 +35,22 @@ import org.tensorflow.lite.support.model.Model;
 
 
 
-
-
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Typeface;
+import android.media.ImageReader.OnImageAvailableListener;
+import android.os.SystemClock;
+import android.util.Size;
+import android.util.TypedValue;
+import android.widget.Toast;
+import java.io.IOException;
+import java.util.List;
+import org.tensorflow.lite.examples.classification.env.BorderedText;
+import org.tensorflow.lite.examples.classification.env.Logger;
+import org.tensorflow.lite.examples.classification.tflite.Classifier;
+import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
+//import org.tensorflow.lite.examples.classification.tflite.Classifier.Model;
+import org.tensorflow.lite.examples.classification.ClassifierActivity;
 
 public class MainActivity extends AppCompatActivity {
     static final int GALLERY_REQUEST = 1;
@@ -51,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         Button bgallery = findViewById(R.id.gal);
         bgallery.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
@@ -60,13 +76,21 @@ public class MainActivity extends AppCompatActivity {
         Button bcamera = findViewById(R.id.cam);
         bcamera.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v)
+            public void onClick(View view)
             {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
             }
         });
 
+        Button butrt = findViewById(R.id.butrt);
+        butrt.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ClassifierActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
@@ -94,6 +118,11 @@ public class MainActivity extends AppCompatActivity {
             imageView.setImageBitmap(thumbnailBitmap);
 
         }
+        Classifier classifier = null;
+        final List<Classifier.Recognition> results =
+            classifier.recognizeImage(bitmap,1);
+        showResultsInBottomSheet(results);
+
     }
 
 }
