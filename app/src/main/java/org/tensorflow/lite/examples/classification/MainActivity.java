@@ -42,6 +42,7 @@ import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
 import android.util.Size;
 import android.util.TypedValue;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.io.IOException;
 import java.util.List;
@@ -52,12 +53,26 @@ import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
 //import org.tensorflow.lite.examples.classification.tflite.Classifier.Model;
 import org.tensorflow.lite.examples.classification.ClassifierActivity;
 
+import static org.tensorflow.lite.examples.classification.tflite.Classifier.Device.CPU;
+import static org.tensorflow.lite.examples.classification.tflite.Classifier.Model.FLOAT_EFFICIENTNET;
+
 public class MainActivity extends AppCompatActivity {
     static final int GALLERY_REQUEST = 1;
     private static final int CAMERA_REQUEST = 0;
     private ImageView imageView;
+    protected TextView recognitionTextView, recognitionValueTextView;
 
-
+    protected void showResultsInBottomSheet(List<Classifier.Recognition> results) {
+        if (results != null && results.size() >= 3) {
+            Classifier.Recognition recognition = results.get(0);
+            if (recognition != null) {
+                if (recognition.getTitle() != null) recognitionTextView.setText(recognition.getTitle());
+                if (recognition.getConfidence() != null)
+                    recognitionValueTextView.setText(
+                            String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +134,15 @@ public class MainActivity extends AppCompatActivity {
 
         }
         Classifier classifier = null;
+        try {
+            classifier.create(this, FLOAT_EFFICIENTNET, CPU, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         final List<Classifier.Recognition> results =
-            classifier.recognizeImage(bitmap,1);
+            classifier.recognizeImage(bitmap,0);
+        recognitionTextView = findViewById(R.id.rtext);
         showResultsInBottomSheet(results);
 
     }
