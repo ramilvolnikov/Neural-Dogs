@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/bowlby_one_sc</item>
+        <item>@font/creepster</item>
+        <item>@font/diplomata</item>
+        <item>@font/ewert</item>
+        <item>@font/julius_sans_one</item>
+    </array>
+</resources>
