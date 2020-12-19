@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 28
@@ -30,7 +32,10 @@ android {
 
 // Download default models; if you wish to use your own models then
 // place them in the "assets" directory and comment out this line.
-apply from:'download.gradle'
+
+//delete:
+//apply from:'download.gradle'
+//apply plugin: 'kotlin-android'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -43,10 +48,12 @@ dependencies {
     implementation('org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly') { changing = true }
     implementation('org.tensorflow:tensorflow-lite-support:0.0.0-nightly') { changing = true }
     // Use local TensorFlow library
+
     // implementation 'org.tensorflow:tensorflow-lite-local:0.0.0'
 
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    compile 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
@@ -59,8 +66,27 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     // dependency to allow us to crop square images
-    compile 'com.soundcloud.android:android-crop:1.0.1@aar'
+    implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
+
     // TensorFlow lite dependency
-    compile 'org.tensorflow:tensorflow-lite:+'
+    implementation 'org.tensorflow:tensorflow-lite:+'
+
+    //Retrofit //https://square.github.io/retrofit/
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+
+
+    //Coroutunes
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4"
+
+
+    //DI
+    implementation 'androidx.paging:paging-runtime-ktx:2.1.2'
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
+
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 }

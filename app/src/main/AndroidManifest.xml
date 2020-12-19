@@ -1,17 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.tensorflow.lite.examples.classification">
 
     <uses-sdk />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
     <uses-feature
         android:name="android.hardware.camera.any"
         android:required="true" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -22,20 +26,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ImageClassification">
-        <activity android:name=".ChooseModel">
+
+        <activity android:name="Info.Info" />
+
+        <activity android:name="com.example.retrofitaplication.MainActivity"/>
+
+        <activity
+            android:name="Static_classification.MainMenu"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ClassifierActivity">
-        </activity>
-        <activity android:name=".Classify"></activity>
-        <!--cropping activity-->
-        <activity android:name="com.soundcloud.android.crop.CropImageActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".ClassifierActivity" />
+
+        <activity android:name="Static_classification.Classify" /> <!-- cropping activity -->
+        <activity
+            android:name="com.soundcloud.android.crop.CropImageActivity"
+            android:screenOrientation="portrait" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/brightness"
-    tools:context=".Classify">
+    tools:context="Static_classification.Classify">
+
 
     <ImageView
         android:id="@+id/selected_image"
@@ -16,6 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="44dp"
         app:srcCompat="@android:color/background_light" />
+
 
     <Button
         android:id="@+id/classify_image"
@@ -143,6 +145,17 @@
                 android:textSize="14sp" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/lmore"
+            style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/julius_sans_one"
+            android:text="LEARN MORE..."
+            android:textAlignment="gravity"
+            android:textSize="18sp" />
+
     </LinearLayout>
 
 
