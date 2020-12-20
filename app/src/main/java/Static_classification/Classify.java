@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.retrofitaplication.MainActivity;
+import com.example.retrofitaplication.Info;
 
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.examples.classification.R;
@@ -41,7 +41,7 @@ public class Classify extends AppCompatActivity {
     private static final int RESULTS_TO_SHOW = 3;
     private static final int IMAGE_MEAN = 128;
     private static final float IMAGE_STD = 128.0f;
-
+    public static final String BREED = "breed";
     // options for model interpreter
     private final Interpreter.Options tfliteOptions = new Interpreter.Options();
     // tflite graph
@@ -180,14 +180,14 @@ public class Classify extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        lmore = (Button)findViewById(R.id.lmore);
+/*        lmore = (Button)findViewById(R.id.lmore);
         lmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             Intent intent = new Intent(Classify.this, MainActivity.class);
             startActivity(intent);
             }
-        });
+        });*/
 
     }
 
@@ -274,5 +274,26 @@ public class Classify extends AppCompatActivity {
         Bitmap resizedBitmap = Bitmap.createBitmap(
                 bm, 0, 0, width, height, matrix, false);
         return resizedBitmap;
+    }
+
+    public void learnListener(View view)
+    {
+        String breed;
+        switch (view.getId()) {
+            case R.id.label1:
+                breed = topLables[2];
+                break;
+            case R.id.label2:
+                breed = topLables[1];
+                break;
+            case R.id.label3:
+                breed = topLables[0];
+                break;
+            default:
+                breed = null;
+        }
+        Intent intent = new Intent(Classify.this, Info.class);
+        intent.putExtra(BREED,breed);
+        startActivity(intent);
     }
 }

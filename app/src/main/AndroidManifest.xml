@@ -27,9 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ImageClassification">
 
-        <activity android:name="Info.Info" />
-
-        <activity android:name="com.example.retrofitaplication.MainActivity"/>
+        <activity android:name="com.example.retrofitaplication.Info"/>
 
         <activity
             android:name="Static_classification.MainMenu"

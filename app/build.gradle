@@ -30,12 +30,6 @@ android {
     }
 }
 
-// Download default models; if you wish to use your own models then
-// place them in the "assets" directory and comment out this line.
-
-//delete:
-//apply from:'download.gradle'
-//apply plugin: 'kotlin-android'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -88,5 +82,7 @@ dependencies {
     implementation 'androidx.paging:paging-runtime-ktx:2.1.2'
     implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
 
+
+    //ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 }
