@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.retrofitaplication.Info;
 
@@ -35,7 +37,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-public class Classify extends AppCompatActivity {
+import adapter.MyAdapter;
+
+public class Classify extends AppCompatActivity implements MyAdapter.OnLearnListener {
 
     // presets for rgb conversion
     private static final int RESULTS_TO_SHOW = 3;
@@ -106,7 +110,7 @@ public class Classify extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        //initilize graph and labels
+        //initialize graph and labels
         try{
             tflite = new Interpreter(loadModelFile(), tfliteOptions);
             labelList = loadLabelList();
@@ -126,13 +130,13 @@ public class Classify extends AppCompatActivity {
         setContentView(R.layout.activity_classify);
 
         // labels that hold top three results of CNN
-        label1 = (TextView) findViewById(R.id.label1);
+        /*label1 = (TextView) findViewById(R.id.label1);
         label2 = (TextView) findViewById(R.id.label2);
         label3 = (TextView) findViewById(R.id.label3);
         // displays the probabilities of top labels
         Confidence1 = (TextView) findViewById(R.id.Confidence1);
         Confidence2 = (TextView) findViewById(R.id.Confidence2);
-        Confidence3 = (TextView) findViewById(R.id.Confidence3);
+        Confidence3 = (TextView) findViewById(R.id.Confidence3);*/
         // initialize imageView that displays selected image to the user
         selected_image = (ImageView) findViewById(R.id.selected_image);
 
@@ -253,13 +257,30 @@ public class Classify extends AppCompatActivity {
             topConfidence[i] = String.format("%.0f%%",label.getValue()*100);
         }
 
-        // set the corresponding textviews with the results
+/*        // set the corresponding textviews with the results
         label1.setText("1. "+topLables[2]);
         label2.setText("2. "+topLables[1]);
         label3.setText("3. "+topLables[0]);
         Confidence1.setText(topConfidence[2]);
         Confidence2.setText(topConfidence[1]);
-        Confidence3.setText(topConfidence[0]);
+        Confidence3.setText(topConfidence[0]);*/
+
+        //initialize data for adapter
+        ArrayList<String> topBreed = new ArrayList<String>();
+        ArrayList<String> topBrConf = new ArrayList<String>();
+
+        for(int i = RESULTS_TO_SHOW - 1; i >= 0; i--)
+        {
+            topBreed.add(topLables[i]);
+            topBrConf.add(topConfidence[i]);
+        }
+        // create RecyclerView
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        // create adapter
+        MyAdapter adapter = new MyAdapter(topBreed, topBrConf, this);
+        // set adapter
+        recyclerView.setAdapter(adapter);
+
     }
 
 
@@ -276,7 +297,29 @@ public class Classify extends AppCompatActivity {
         return resizedBitmap;
     }
 
-    public void learnListener(View view)
+    @Override
+    public void onLearnClick(int position) {
+
+        String breed;
+        switch (position) {
+            case 0:
+                breed = topLables[2];
+                break;
+            case 1:
+                breed = topLables[1];
+                break;
+            case 2:
+                breed = topLables[0];
+                break;
+            default:
+                breed = null;
+        }
+        Intent intent = new Intent(Classify.this, Info.class);
+        intent.putExtra(BREED,breed);
+        startActivity(intent);
+    }
+
+    /*public void learnListener(View view)
     {
         String breed;
         switch (view.getId()) {
@@ -295,5 +338,5 @@ public class Classify extends AppCompatActivity {
         Intent intent = new Intent(Classify.this, Info.class);
         intent.putExtra(BREED,breed);
         startActivity(intent);
-    }
+    }*/
 }
