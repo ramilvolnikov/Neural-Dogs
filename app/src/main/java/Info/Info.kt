@@ -8,7 +8,6 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -41,16 +40,16 @@ class Info : AppCompatActivity() {
         viewModel = ViewModelProvider(this,viewModelFactory).get(MainViewModel::class.java)
         viewModel.myResponse.observe(this, Observer{ response ->
             if (response.isSuccessful) {
-                textview.text = response.body()?.get(0)?.breeds?.get(0)?.name
-                textview2.text = response.body()?.get(0)?.breeds?.get(0)?.bred_for
-                textview3.text = response.body()?.get(0)?.breeds?.get(0)?.breed_group
-                textview4.text = response.body()?.get(0)?.breeds?.get(0)?.origin
-                textview5.text = response.body()?.get(0)?.breeds?.get(0)?.temperament
-                textview6.text = response.body()?.get(0)?.breeds?.get(0)?.life_span
-                textview7.text = (response.body()?.get(0)?.breeds?.get(0)?.height?.metric + " cm")
-                textview8.text = (response.body()?.get(0)?.breeds?.get(0)?.weight?.metric + " kgs")
+                breeds_names.text = response.body()?.get(0)?.breeds?.get(0)?.name
+                bred_for.text = response.body()?.get(0)?.breeds?.get(0)?.bred_for
+                breed_group.text = response.body()?.get(0)?.breeds?.get(0)?.breed_group
+                origin.text = response.body()?.get(0)?.breeds?.get(0)?.origin
+                temperament.text = response.body()?.get(0)?.breeds?.get(0)?.temperament
+                life_span.text = response.body()?.get(0)?.breeds?.get(0)?.life_span
+                height.text = (response.body()?.get(0)?.breeds?.get(0)?.height?.metric + " cm")
+                weight.text = (response.body()?.get(0)?.breeds?.get(0)?.weight?.metric + " kgs")
 
-                Glide.with(this).load(response.body()?.get(0)?.url).into(imageView5)
+                Glide.with(this).load(response.body()?.get(0)?.url).into(internet_image)
             } else {
                 Log.d("Response", response.errorBody().toString())
             }
