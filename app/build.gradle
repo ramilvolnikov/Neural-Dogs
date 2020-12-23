@@ -1,3 +1,9 @@
+ext {
+    var = '3.6.2'
+    name = '3.6.2'
+    var1 = name
+    sghdshgds = var1
+}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -93,4 +99,12 @@ dependencies {
 
     //Cardview
     implementation "androidx.cardview:cardview:1.0.0"
+}
+
+buildscript {
+    dependencies {
+        classpath 'com.android.tools.build:gradle'
+        classpath "com.android.tools.build:gradle"
+        classpath 'com.android.tools.build:gradle'
+    }
 }

@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.retrofitaplication.Info;
@@ -80,13 +79,6 @@ public class Classify extends AppCompatActivity implements MyAdapter.OnLearnList
     private ImageView selected_image;
     private Button classify_button;
     private Button back_button;
-    private Button lmore;
-    private TextView label1;
-    private TextView label2;
-    private TextView label3;
-    private TextView Confidence1;
-    private TextView Confidence2;
-    private TextView Confidence3;
 
     // priority queue that will hold the top results from the CNN
     private PriorityQueue<Map.Entry<String, Float>> sortedLabels =
@@ -129,14 +121,6 @@ public class Classify extends AppCompatActivity implements MyAdapter.OnLearnList
 
         setContentView(R.layout.activity_classify);
 
-        // labels that hold top three results of CNN
-        /*label1 = (TextView) findViewById(R.id.label1);
-        label2 = (TextView) findViewById(R.id.label2);
-        label3 = (TextView) findViewById(R.id.label3);
-        // displays the probabilities of top labels
-        Confidence1 = (TextView) findViewById(R.id.Confidence1);
-        Confidence2 = (TextView) findViewById(R.id.Confidence2);
-        Confidence3 = (TextView) findViewById(R.id.Confidence3);*/
         // initialize imageView that displays selected image to the user
         selected_image = (ImageView) findViewById(R.id.selected_image);
 
@@ -183,16 +167,6 @@ public class Classify extends AppCompatActivity implements MyAdapter.OnLearnList
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-/*        lmore = (Button)findViewById(R.id.lmore);
-        lmore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            Intent intent = new Intent(Classify.this, MainActivity.class);
-            startActivity(intent);
-            }
-        });*/
-
     }
 
     // loads tflite grapg from file
@@ -257,27 +231,24 @@ public class Classify extends AppCompatActivity implements MyAdapter.OnLearnList
             topConfidence[i] = String.format("%.0f%%",label.getValue()*100);
         }
 
-/*        // set the corresponding textviews with the results
-        label1.setText("1. "+topLables[2]);
-        label2.setText("2. "+topLables[1]);
-        label3.setText("3. "+topLables[0]);
-        Confidence1.setText(topConfidence[2]);
-        Confidence2.setText(topConfidence[1]);
-        Confidence3.setText(topConfidence[0]);*/
-
         //initialize data for adapter
         ArrayList<String> topBreed = new ArrayList<String>();
         ArrayList<String> topBrConf = new ArrayList<String>();
+        ArrayList<Integer> iconIds = new ArrayList<Integer>();
 
         for(int i = RESULTS_TO_SHOW - 1; i >= 0; i--)
         {
             topBreed.add(topLables[i]);
             topBrConf.add(topConfidence[i]);
         }
+        iconIds.add(R.drawable.gold);
+        iconIds.add(R.drawable.silver);
+        iconIds.add(R.drawable.bronz);
+
         // create RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         // create adapter
-        MyAdapter adapter = new MyAdapter(topBreed, topBrConf, this);
+        MyAdapter adapter = new MyAdapter(topBreed, topBrConf, iconIds, this);
         // set adapter
         recyclerView.setAdapter(adapter);
 
@@ -318,25 +289,4 @@ public class Classify extends AppCompatActivity implements MyAdapter.OnLearnList
         intent.putExtra(BREED,breed);
         startActivity(intent);
     }
-
-    /*public void learnListener(View view)
-    {
-        String breed;
-        switch (view.getId()) {
-            case R.id.label1:
-                breed = topLables[2];
-                break;
-            case R.id.label2:
-                breed = topLables[1];
-                break;
-            case R.id.label3:
-                breed = topLables[0];
-                break;
-            default:
-                breed = null;
-        }
-        Intent intent = new Intent(Classify.this, Info.class);
-        intent.putExtra(BREED,breed);
-        startActivity(intent);
-    }*/
 }
