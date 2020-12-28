@@ -10,7 +10,7 @@
     <item>
 
         <bitmap
-            android:src="@drawable/ic_launcher_round"
+            android:src="@drawable/all_logo"
             android:gravity="center"/>
 
     </item>

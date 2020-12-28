@@ -144,6 +144,9 @@ public abstract class CameraActivity extends AppCompatActivity
         });
     sheetBehavior.setHideable(false);
 
+    //Hide information and some functional from user
+    sheetBehavior.setDraggable(false);
+
     sheetBehavior.setBottomSheetCallback(
         new BottomSheetBehavior.BottomSheetCallback() {
           @Override

@@ -8,6 +8,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -67,13 +68,15 @@ class Info : AppCompatActivity() {
         if (BREED_IDS != 0)
             if (isNetworkAvailable(this)) {
                 viewModel.getDogs(BREED_IDS)
+                internet_image.visibility = View.VISIBLE
             }else {
-                val toast = Toast.makeText(applicationContext, "Please, check your connection!", Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext, "Please, check your connection!", Toast.LENGTH_SHORT)
                     .show()
             }
         else{
             val showInBrowser = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=$tmp"))
             startActivity(showInBrowser)
+            finish()
         }
 
     }

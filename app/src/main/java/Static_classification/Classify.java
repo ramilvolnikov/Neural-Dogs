@@ -134,8 +134,7 @@ public class Classify extends AppCompatActivity implements MyAdapter.OnLearnList
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Classify.this, MainMenu.class);
-                startActivity(i);
+                finish();
             }
         });
 

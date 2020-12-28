@@ -31,10 +31,10 @@
         app:icon="@android:drawable/ic_menu_camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.142"
+        app:layout_constraintVertical_bias="0.252"
         app:strokeColor="#000000" />
 
     <Button
@@ -58,10 +58,10 @@
         app:icon="@android:drawable/ic_menu_gallery"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inception_float"
-        app:layout_constraintVertical_bias="0.484"
+        app:layout_constraintVertical_bias="0.518"
         app:strokeColor="#000000" />
 
     <Button
@@ -74,7 +74,7 @@
         android:layout_marginHorizontal="10dp"
 
 
-        android:layout_marginBottom="172dp"
+        android:layout_marginBottom="84dp"
 
         android:fontFamily="@font/vampiro_one"
         android:singleLine="false"
@@ -86,20 +86,20 @@
         app:icon="@android:drawable/ic_notification_overlay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:strokeColor="#000000" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="242dp"
-        android:layout_height="204dp"
+        android:layout_width="match_parent"
+        android:layout_height="331dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.062"
-        app:srcCompat="@drawable/bviewwhite" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/all_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
