@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/492020966/TFLite_Image_Classification_Demo_App.iml" filepath="$PROJECT_DIR$/.idea/modules/492020966/TFLite_Image_Classification_Demo_App.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TFLite_Image_Classification_Demo_App.app.iml" filepath="$PROJECT_DIR$/.idea/modules/TFLite_Image_Classification_Demo_App.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/492020966/Neural_Dogs.iml" filepath="$PROJECT_DIR$/.idea/modules/492020966/Neural_Dogs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Neural_Dogs.app.iml" filepath="$PROJECT_DIR$/.idea/modules/Neural_Dogs.app.iml" />
     </modules>
   </component>
 </project>

@@ -3,13 +3,7 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/baloo</item>
         <item>@font/bowlby_one_sc</item>
-        <item>@font/creepster</item>
         <item>@font/delius_unicase_bold</item>
-        <item>@font/diplomata</item>
-        <item>@font/ewert</item>
-        <item>@font/julius_sans_one</item>
-        <item>@font/roboto_bold</item>
-        <item>@font/rubik_medium</item>
         <item>@font/ubuntu_bold</item>
         <item>@font/vampiro_one</item>
     </array>

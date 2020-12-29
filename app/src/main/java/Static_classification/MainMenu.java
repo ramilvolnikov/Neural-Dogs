@@ -76,7 +76,7 @@ public class MainMenu extends AppCompatActivity {
                     REQUEST_PERMISSION);
         }
 
-        gal = (Button)findViewById(R.id.gal);
+        gal = (Button)findViewById(R.id.gallery_button);
         gal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +91,7 @@ public class MainMenu extends AppCompatActivity {
             }
         });
         // on click for inception float model
-        inceptionFloat = (Button)findViewById(R.id.inception_float);
+        inceptionFloat = (Button)findViewById(R.id.camera_button);
         inceptionFloat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +103,7 @@ public class MainMenu extends AppCompatActivity {
                 openCameraIntent();
             }
         });
-        Button button = findViewById(R.id.button);
+        Button button = findViewById(R.id.realtime_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

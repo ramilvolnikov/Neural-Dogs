@@ -11,7 +11,7 @@
 
 
     <Button
-        android:id="@+id/inception_float"
+        android:id="@+id/camera_button"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
 
         android:layout_width="match_parent"
@@ -33,12 +33,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/logoView"
         app:layout_constraintVertical_bias="0.252"
         app:strokeColor="#000000" />
 
     <Button
-        android:id="@+id/gal"
+        android:id="@+id/gallery_button"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
 
         android:layout_width="match_parent"
@@ -56,16 +56,16 @@
 
         app:backgroundTint="@android:color/transparent"
         app:icon="@android:drawable/ic_menu_gallery"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/realtime_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inception_float"
+        app:layout_constraintTop_toBottomOf="@+id/camera_button"
         app:layout_constraintVertical_bias="0.518"
         app:strokeColor="#000000" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/realtime_button"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
 
         android:layout_width="match_parent"
@@ -91,7 +91,7 @@
         app:strokeColor="#000000" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/logoView"
         android:layout_width="match_parent"
         android:layout_height="331dp"
         app:layout_constraintBottom_toBottomOf="parent"
