@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/menu_background"
-    tools:context="Static_classification.MainMenu">
+    tools:context="static_classification.MainMenu">
 
 
     <Button
@@ -23,7 +23,7 @@
         android:fontFamily="@font/vampiro_one"
 
         android:singleLine="false"
-        android:text="FROM CAMERA"
+        android:text="@string/from_camera"
 
         android:textSize="24sp"
 
@@ -50,7 +50,7 @@
         android:fontFamily="@font/vampiro_one"
 
         android:singleLine="false"
-        android:text="FROM GALLERY"
+        android:text="@string/from_gallery"
 
         android:textSize="24sp"
 
@@ -79,7 +79,7 @@
         android:fontFamily="@font/vampiro_one"
         android:singleLine="false"
 
-        android:text="REALTIME"
+        android:text="@string/realtime"
 
         android:textSize="24sp"
         app:backgroundTint="@android:color/transparent"
@@ -94,6 +94,7 @@
         android:id="@+id/logoView"
         android:layout_width="match_parent"
         android:layout_height="331dp"
+        android:contentDescription="@string/logotype"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

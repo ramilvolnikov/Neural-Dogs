@@ -11,6 +11,7 @@
         android:id="@+id/top_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:contentDescription="@string/logotype"
         android:scaleType="fitXY">
     </ImageView>
 

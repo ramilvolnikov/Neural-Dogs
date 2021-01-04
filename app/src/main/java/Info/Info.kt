@@ -1,6 +1,6 @@
 package com.example.retrofitaplication
 
-import Static_classification.Classify.BREED
+import static_classification.Classify.BREED
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences

@@ -79,7 +79,7 @@
                 android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
-                android:text="Breed group:"
+                android:text="@string/breed_group"
                 android:textSize="15sp" />
 
             <TextView
@@ -102,7 +102,7 @@
                 android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
-                android:text="Bred for:"
+                android:text="@string/bred_for"
                 android:textSize="15sp" />
 
             <TextView
@@ -125,7 +125,7 @@
                 android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
-                android:text="Weight:"
+                android:text="@string/weight"
                 android:textSize="15sp" />
 
             <TextView
@@ -148,7 +148,7 @@
                 android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
-                android:text="Height:"
+                android:text="@string/height"
                 android:textSize="15sp" />
 
             <TextView
@@ -172,7 +172,7 @@
                 android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
-                android:text="Lifespan:"
+                android:text="@string/lifespan"
                 android:textSize="15sp" />
 
             <TextView
@@ -196,7 +196,7 @@
                 android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
-                android:text="Temperament:"
+                android:text="@string/temperament"
                 android:textSize="15sp" />
 
             <TextView
@@ -220,7 +220,7 @@
                 android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
-                android:text="Origin:"
+                android:text="@string/origin"
                 android:textSize="15sp" />
 
             <TextView

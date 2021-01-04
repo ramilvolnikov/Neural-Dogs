@@ -1,4 +1,4 @@
-package Static_classification;
+package static_classification;
 
 import android.Manifest;
 import android.content.ContentValues;
@@ -22,10 +22,12 @@ import androidx.core.content.ContextCompat;
 
 import com.soundcloud.android.crop.Crop;
 
-import org.tensorflow.lite.examples.classification.ClassifierActivity;
+
 import org.tensorflow.lite.examples.classification.R;
 
 import java.io.File;
+
+import realtime_classification.MainActivity;
 
 public class MainMenu extends AppCompatActivity {
 
@@ -107,7 +109,7 @@ public class MainMenu extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenu.this, ClassifierActivity.class);
+                Intent intent = new Intent(MainMenu.this, MainActivity.class);
                 startActivity(intent);
             }
         });

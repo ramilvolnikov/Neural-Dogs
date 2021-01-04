@@ -9,6 +9,19 @@
     </string-array>
 
     <string name="tfe_ic_device" translatable="false">Device:</string>
+    <string name="woof">WOOF!</string>
+    <string name="back">BACK</string>
+    <string name="breed_group">Breed group:</string>
+    <string name="bred_for">Bred for:</string>
+    <string name="weight">Weight:</string>
+    <string name="height">Height:</string>
+    <string name="lifespan">Lifespan:</string>
+    <string name="temperament">Temperament:</string>
+    <string name="origin">Origin:</string>
+    <string name="from_camera">FROM CAMERA</string>
+    <string name="from_gallery">FROM GALLERY</string>
+    <string name="realtime">REALTIME</string>
+    <string name="logotype">logo</string>
     <string-array name="tfe_ic_devices" translatable="false">
         <item>CPU</item>
         <item>GPU</item>

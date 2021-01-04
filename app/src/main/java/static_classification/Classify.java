@@ -1,4 +1,4 @@
-package Static_classification;
+package static_classification;
 
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
