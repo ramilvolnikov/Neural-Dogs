@@ -120,7 +120,7 @@ class TFLiteClassifier(private val context: Context) {
 
         var inferenceTime = endTime - startTime
         var index = getMaxResult(output[0])
-        var result = "Prediction is ${labels[index]}\nInference Time $inferenceTime ms"
+        var result = "${labels[index]}\nInference Time $inferenceTime ms"
         return result
     }
 

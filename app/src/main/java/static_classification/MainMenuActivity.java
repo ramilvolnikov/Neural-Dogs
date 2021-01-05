@@ -27,9 +27,9 @@ import org.tensorflow.lite.examples.classification.R;
 
 import java.io.File;
 
-import realtime_classification.MainActivity;
+import realtime_classification.RealtimeActivity;
 
-public class MainMenu extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity {
 
     // button for each available classifier
     private Button inceptionFloat;
@@ -109,7 +109,7 @@ public class MainMenu extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenu.this, MainActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, RealtimeActivity.class);
                 startActivity(intent);
             }
         });
@@ -162,7 +162,7 @@ public class MainMenu extends AppCompatActivity {
                 Uri source_uri = imageUri;
                 Uri dest_uri = Uri.fromFile(new File(getCacheDir(), "cropped"));
                 // need to crop it to square image as CNN's always required square input
-                Crop.of(source_uri, dest_uri).asSquare().start(MainMenu.this);
+                Crop.of(source_uri, dest_uri).asSquare().start(MainMenuActivity.this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -171,7 +171,7 @@ public class MainMenu extends AppCompatActivity {
         // if cropping acitivty is finished, get the resulting cropped image uri and send it to 'Classify' activity
         else if(requestCode == Crop.REQUEST_CROP && resultCode == RESULT_OK){
             imageUri = Crop.getOutput(data);
-            Intent i = new Intent(MainMenu.this, Classify.class);
+            Intent i = new Intent(MainMenuActivity.this, ClassifyActivity.class);
             // put image data in extras to send
             i.putExtra("resID_uri", imageUri);
             // put filename in extras

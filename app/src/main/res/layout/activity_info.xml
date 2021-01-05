@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/info_backgr"
     android:visibility="visible"
-    tools:context="com.example.retrofitaplication.Info"
+    tools:context="com.example.retrofitaplication.InfoActivity"
     tools:visibility="visible">
 
     <TextView

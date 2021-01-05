@@ -6,7 +6,7 @@ import android.util.DisplayMetrics
 import android.util.Rational
 import android.util.Size
 import android.view.Surface
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_realtime.*
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.os.Handler
@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream
 import org.tensorflow.lite.examples.classification.R
 
 
-class MainActivity : AppCompatActivity() {
+class RealtimeActivity : AppCompatActivity() {
 
     private var lensFacing = CameraX.LensFacing.BACK
     private val TAG = "MainActivity"
@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_CODE_PERMISSIONS = 101
     private val REQUIRED_PERMISSIONS = arrayOf("android.permission.CAMERA")
 
-    private var tfLiteClassifier: TFLiteClassifier = TFLiteClassifier(this@MainActivity)
+    private var tfLiteClassifier: TFLiteClassifier = TFLiteClassifier(this@RealtimeActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_realtime)
 
         if (allPermissionsGranted()) {
             textureView.post { startCamera() }

@@ -1,6 +1,6 @@
 package com.example.retrofitaplication
 
-import static_classification.Classify.BREED
+import static_classification.ClassifyActivity.BREED
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_info.*
 import org.tensorflow.lite.examples.classification.R
 
 
-class Info : AppCompatActivity() {
+class InfoActivity : AppCompatActivity() {
     lateinit var viewModel : MainViewModel
     val APP_PREFERENCES = "mysettings"
     lateinit var mSettings : SharedPreferences

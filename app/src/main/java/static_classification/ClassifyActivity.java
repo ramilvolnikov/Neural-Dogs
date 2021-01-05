@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.retrofitaplication.Info;
+import com.example.retrofitaplication.InfoActivity;
 
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.examples.classification.R;
@@ -37,7 +37,7 @@ import java.util.PriorityQueue;
 
 import adapter.MyAdapter;
 
-public class Classify extends AppCompatActivity implements MyAdapter.OnLearnListener {
+public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnLearnListener {
 
     // presets for rgb conversion
     private static final int RESULTS_TO_SHOW = 3;
@@ -283,7 +283,7 @@ public class Classify extends AppCompatActivity implements MyAdapter.OnLearnList
             default:
                 breed = null;
         }
-        Intent intent = new Intent(Classify.this, Info.class);
+        Intent intent = new Intent(ClassifyActivity.this, InfoActivity.class);
         intent.putExtra(BREED,breed);
         startActivity(intent);
     }

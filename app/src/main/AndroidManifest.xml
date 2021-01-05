@@ -31,10 +31,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ImageClassification">
 
-        <activity android:name="com.example.retrofitaplication.Info"/>
+        <activity android:name="com.example.retrofitaplication.InfoActivity"/>
 
         <activity
-            android:name="static_classification.MainMenu"
+            android:name="static_classification.MainMenuActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,11 +43,11 @@
         </activity>
 
         <activity
-            android:name="realtime_classification.MainActivity"
+            android:name="realtime_classification.RealtimeActivity"
             android:hardwareAccelerated="false">
         </activity>
 
-        <activity android:name="static_classification.Classify" /> <!-- cropping activity -->
+        <activity android:name="static_classification.ClassifyActivity" /> <!-- cropping activity -->
         <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"
             android:screenOrientation="portrait" />
