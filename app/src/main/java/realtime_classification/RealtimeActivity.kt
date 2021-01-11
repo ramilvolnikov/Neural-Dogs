@@ -22,6 +22,7 @@ import org.tensorflow.lite.examples.classification.R
 
 class RealtimeActivity : AppCompatActivity() {
 
+    //Which camera will be used
     private var lensFacing = CameraX.LensFacing.BACK
     private val TAG = "MainActivity"
 
@@ -34,15 +35,20 @@ class RealtimeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_realtime)
 
+        //Checking permissions
         if (allPermissionsGranted()) {
+            //Start on UI-thread
             textureView.post { startCamera() }
+            //Call when the layout bounds changed (_ - unused parameters)
             textureView.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
                 updateTransform()
             }
         } else {
+            //Request permissions
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
 
+        //Посмотрим позже
         tfLiteClassifier
             .initialize()
             .addOnSuccessListener { }
@@ -51,10 +57,12 @@ class RealtimeActivity : AppCompatActivity() {
     }
 
     private fun startCamera() {
+        //Information about a display
         val metrics = DisplayMetrics().also { textureView.display.getRealMetrics(it) }
         val screenSize = Size(metrics.widthPixels, metrics.heightPixels)
         val screenAspectRatio = Rational(1, 1)
 
+        //Set up the Preview
         val previewConfig = PreviewConfig.Builder().apply {
             setLensFacing(lensFacing)
             setTargetResolution(screenSize)
@@ -64,12 +72,13 @@ class RealtimeActivity : AppCompatActivity() {
         }.build()
 
         val preview = Preview(previewConfig)
+        //Add the camera preview to the TextureView
         preview.setOnPreviewOutputUpdateListener {
             textureView.surfaceTexture = it.surfaceTexture
             updateTransform()
         }
 
-
+        //Set up the Analyzer
         val analyzerConfig = ImageAnalysisConfig.Builder().apply {
             // Use a worker thread for image analysis to prevent glitches
             val analyzerThread = HandlerThread("AnalysisThread").apply {
@@ -79,23 +88,27 @@ class RealtimeActivity : AppCompatActivity() {
             setImageReaderMode(ImageAnalysis.ImageReaderMode.ACQUIRE_LATEST_IMAGE)
         }.build()
 
-
+        //Analyzing images
         val analyzerUseCase = ImageAnalysis(analyzerConfig)
         analyzerUseCase.analyzer =
             ImageAnalysis.Analyzer { image: ImageProxy, rotationDegrees: Int ->
-
+                //Converting the ImageProxy to a Bitmap
                 val bitmap = image.toBitmap()
 
+                //Run classification for a one frame
                 tfLiteClassifier
                     .classifyAsync(bitmap)
                     .addOnSuccessListener { resultText -> predictedTextView?.text = resultText }
                     .addOnFailureListener { error ->  }
 
             }
+        //Binding CameraX to lifecycle
         CameraX.bindToLifecycle(this, preview, analyzerUseCase)
     }
 
+    //converting the ImageProxy to a Bitmap
     fun ImageProxy.toBitmap(): Bitmap {
+        //YUV - color encoding system
         val yBuffer = planes[0].buffer // Y
         val uBuffer = planes[1].buffer // U
         val vBuffer = planes[2].buffer // V
@@ -117,6 +130,7 @@ class RealtimeActivity : AppCompatActivity() {
         return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
 
+    //Fix the orientation of the view with respect to the device’s orientation
     private fun updateTransform() {
         val matrix = Matrix()
         val centerX = textureView.width / 2f
@@ -167,6 +181,5 @@ class RealtimeActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         //tfLiteClassifier.close()
-
     }
 }
