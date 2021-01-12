@@ -31,12 +31,15 @@ class TFLiteClassifier(private val context: Context) {
 
     var labels = ArrayList<String>()
 
+    //Using cached thread pool
     private val executorService: ExecutorService = Executors.newCachedThreadPool()
 
+    //Some parameters for our model
     private var inputImageWidth: Int = 0
     private var inputImageHeight: Int = 0
     private var modelInputSize: Int = 0
 
+    //Called in the onCreate method of our RealtimeActivity (async)
     fun initialize(): Task<Void> {
         return call(
             executorService,
@@ -47,20 +50,24 @@ class TFLiteClassifier(private val context: Context) {
         )
     }
 
+    //Initialization interpreter
     @Throws(IOException::class)
     private fun initializeInterpreter() {
 
-
-
+        //Loading model and labels
         val assetManager = context.assets
         val model = loadModelFile(assetManager, "model_unquant.tflite")
-
         labels = loadLines(context, "labels.txt")
+
+        //Add GPU accelerator
         val options = Interpreter.Options()
         gpuDelegate = GpuDelegate()
         options.addDelegate(gpuDelegate)
+
+        //Initialization interpreter with options
         val interpreter = Interpreter(model, options)
 
+        //Get some parameters for our model
         val inputShape = interpreter.getInputTensor(0).shape()
         inputImageWidth = inputShape[1]
         inputImageHeight = inputShape[2]
@@ -71,8 +78,10 @@ class TFLiteClassifier(private val context: Context) {
         isInitialized = true
     }
 
+    //Converting the model into a ByteBuffer
     @Throws(IOException::class)
     private fun loadModelFile(assetManager: AssetManager, filename: String): ByteBuffer {
+        //Open an uncompressed asset
         val fileDescriptor = assetManager.openFd(filename)
         val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
         val fileChannel = inputStream.channel
@@ -81,6 +90,7 @@ class TFLiteClassifier(private val context: Context) {
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
     }
 
+    //Loading the labels
     @Throws(IOException::class)
     fun loadLines(context: Context, filename: String): ArrayList<String> {
         val s = Scanner(InputStreamReader(context.assets.open(filename)))
@@ -92,6 +102,7 @@ class TFLiteClassifier(private val context: Context) {
         return labels
     }
 
+    //Returns the label with the highest confidence
     private fun getMaxResult(result: FloatArray): Int {
         var probability = result[0]
         var index = 0
@@ -104,26 +115,31 @@ class TFLiteClassifier(private val context: Context) {
         return index
     }
 
-
+    //Running Inference
     private fun classify(bitmap: Bitmap): String {
-
         check(isInitialized) { "TF Lite Interpreter is not initialized yet." }
+
+        //Resize Bitmap to fit the model input shape
         val resizedImage =
             Bitmap.createScaledBitmap(bitmap, inputImageWidth, inputImageHeight, true)
 
+        //Convert resized Bitmap into a ByteBuffer
         val byteBuffer = convertBitmapToByteBuffer(resizedImage)
 
         val output = Array(1) { FloatArray(labels.size) }
         val startTime = SystemClock.uptimeMillis()
+        //Running inference
         interpreter?.run(byteBuffer, output)
         val endTime = SystemClock.uptimeMillis()
 
         var inferenceTime = endTime - startTime
         var index = getMaxResult(output[0])
+        //Initialization result string
         var result = "${labels[index]}\nInference Time $inferenceTime ms"
         return result
     }
 
+    //Called from analyzer for one frame
     fun classifyAsync(bitmap: Bitmap): Task<String> {
         return call(executorService, Callable<String> { classify(bitmap) })
     }
@@ -168,6 +184,7 @@ class TFLiteClassifier(private val context: Context) {
 
     companion object {
         private const val TAG = "TfliteClassifier"
+        //Some parameters
         private const val FLOAT_TYPE_SIZE = 4
         private const val CHANNEL_SIZE = 3
         private const val IMAGE_MEAN = 128.0f
