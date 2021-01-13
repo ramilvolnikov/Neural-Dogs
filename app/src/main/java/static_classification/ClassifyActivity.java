@@ -48,42 +48,43 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
     private final Interpreter.Options tfliteOptions = new Interpreter.Options();
     // tflite graph
     private Interpreter tflite;
-    // holds all the possible labels for model
+    // All the possible labels for model
     private List<String> labelList;
-    // holds the selected image data as bytes
+    // Selected image as bytes
     private ByteBuffer imgData = null;
-    // holds the probabilities of each label for non-quantized graphs
+    // Probabilities of each label for non-quantized graphs
     private float[][] labelProbArray = null;
-    // holds the probabilities of each label for quantized graphs
+    // Probabilities of each label for quantized graphs
     private byte[][] labelProbArrayB = null;
-    // array that holds the labels with the highest probabilities
+    // Labels with top probabilities
     private String[] topLables = null;
-    // array that holds the highest probabilities
+    // Top probabilities
     private String[] topConfidence = null;
 
 
-    // selected classifier information received from extras
+    // Selected classifier
     private String chosen;
     private boolean quant;
 
-    // input image dimensions for the Inception Model
+    // Input image dimensions for our model
     private int DIM_IMG_SIZE_X = 224;
     private int DIM_IMG_SIZE_Y = 224;
     private int DIM_PIXEL_SIZE = 3;
 
-    // int array to hold image data
+    // Image data
     private int[] intValues;
 
-    // activity elements
+    // Activity elements
     private ImageView selected_image;
     private Button classify_button;
     private Button back_button;
 
-    // priority queue that will hold the top results from the CNN
+    // Priority queue with top results
     private PriorityQueue<Map.Entry<String, Float>> sortedLabels =
             new PriorityQueue<>(
                     RESULTS_TO_SHOW,
                     new Comparator<Map.Entry<String, Float>>() {
+                        // Ordering by value
                         @Override
                         public int compare(Map.Entry<String, Float> o1, Map.Entry<String, Float> o2) {
                             return (o1.getValue()).compareTo(o2.getValue());
@@ -92,16 +93,16 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // get all selected classifier data from classifiers
+        // Checking type of classifier
         chosen = (String) getIntent().getStringExtra("chosen");
         quant = (boolean) getIntent().getBooleanExtra("quant", false);
 
-        // initialize array that holds image data
+        // Initialize array
         intValues = new int[DIM_IMG_SIZE_X * DIM_IMG_SIZE_Y];
 
         super.onCreate(savedInstanceState);
 
-        //initialize graph and labels
+        // Initialize interpreter and labels
         try{
             tflite = new Interpreter(loadModelFile(), tfliteOptions);
             labelList = loadLabelList();
@@ -109,66 +110,57 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
             ex.printStackTrace();
         }
 
-        // initialize byte array. The size depends if the input data needs to be quantized or not
+        // Initialize byte array
         imgData = ByteBuffer.allocateDirect(
                             4 * DIM_IMG_SIZE_X * DIM_IMG_SIZE_Y * DIM_PIXEL_SIZE);
 
         imgData.order(ByteOrder.nativeOrder());
 
-        // initialize probabilities array. The datatypes that array holds depends if the input data needs to be quantized or not
+        // Initialize probabilities array
         labelProbArray = new float[1][labelList.size()];
 
         setContentView(R.layout.activity_classify);
 
-        // initialize imageView that displays selected image to the user
+        // Initialize imageView
         selected_image = (ImageView) findViewById(R.id.selected_image);
 
-        // initialize array to hold top labels
+        // Initialize array with top labels
         topLables = new String[RESULTS_TO_SHOW];
-        // initialize array to hold top probabilities
+        // Initialize array with top probabilities
         topConfidence = new String[RESULTS_TO_SHOW];
 
-        // allows user to go back to activity to select a different image
+        // Back to main menu
         back_button = (Button)findViewById(R.id.back_button);
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        back_button.setOnClickListener(view -> finish());
 
-        // classify current dispalyed image
+        // Classify!
         classify_button = (Button)findViewById(R.id.classify_image);
-        classify_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // get current bitmap from imageView
-                Bitmap bitmap_orig = ((BitmapDrawable)selected_image.getDrawable()).getBitmap();
-                // resize the bitmap to the required input size to the CNN
-                Bitmap bitmap = getResizedBitmap(bitmap_orig, DIM_IMG_SIZE_X, DIM_IMG_SIZE_Y);
-                // convert bitmap to byte array
-                convertBitmapToByteBuffer(bitmap);
-                // pass byte data to the graph
-                tflite.run(imgData, labelProbArray);
-                // display the results
-                printTopKLabels();
-            }
+        classify_button.setOnClickListener(view -> {
+            // Get bitmap from imageView
+            Bitmap bitmap_orig = ((BitmapDrawable)selected_image.getDrawable()).getBitmap();
+            // Resize bitmap
+            Bitmap bitmap = getResizedBitmap(bitmap_orig, DIM_IMG_SIZE_X, DIM_IMG_SIZE_Y);
+            // Convert bitmap to byte array
+            convertBitmapToByteBuffer(bitmap);
+            // Run interpreter
+            tflite.run(imgData, labelProbArray);
+            // Show results
+            printTopKLabels();
         });
 
-        // get image from previous activity to show in the imageView
+        // Get image from camera or gallery (MainMenuActivity)
         Uri uri = (Uri)getIntent().getParcelableExtra("resID_uri");
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
             selected_image.setImageBitmap(bitmap);
-            // not sure why this happens, but without this the image appears on its side
-            selected_image.setRotation(selected_image.getRotation() + 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // loads tflite grapg from file
+    // Loading model
     private MappedByteBuffer loadModelFile() throws IOException {
+        //Open an uncompressed asset
         AssetFileDescriptor fileDescriptor = this.getAssets().openFd(chosen);
         FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
         FileChannel fileChannel = inputStream.getChannel();
@@ -177,19 +169,19 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
     }
 
-    // converts bitmap to byte array which is passed in the tflite graph
+    // Converting bitmap to byte array
     private void convertBitmapToByteBuffer(Bitmap bitmap) {
         if (imgData == null) {
             return;
         }
         imgData.rewind();
         bitmap.getPixels(intValues, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
-        // loop through all pixels
+        // Loop through all pixels
         int pixel = 0;
         for (int i = 0; i < DIM_IMG_SIZE_X; ++i) {
             for (int j = 0; j < DIM_IMG_SIZE_Y; ++j) {
                 final int val = intValues[pixel++];
-                // get rgb values from intValues where each int holds the rgb values for a pixel.
+                // Get rgb values from intValues where each int holds the rgb values for a pixel
                 imgData.putFloat((((val >> 16) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
                 imgData.putFloat((((val >> 8) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
                 imgData.putFloat((((val) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
@@ -197,7 +189,7 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
         }
     }
 
-    // loads the labels from the label txt file in assets into a string array
+    // Loading labels from txt-file into string array
     private List<String> loadLabelList() throws IOException {
         List<String> labelList = new ArrayList<String>();
         BufferedReader reader =
@@ -210,18 +202,19 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
         return labelList;
     }
 
-    // print the top labels and respective confidences
+    // Print top labels with confidences
     private void printTopKLabels() {
-        // add all results to priority queue
+        // Add all results to priority queue
         for (int i = 0; i < labelList.size(); ++i) {
                 sortedLabels.add(
                         new AbstractMap.SimpleEntry<>(labelList.get(i), labelProbArray[0][i]));
             if (sortedLabels.size() > RESULTS_TO_SHOW) {
+                // poll - returns the item with remove from the head of the queue
                 sortedLabels.poll();
             }
         }
 
-        // get top results from priority queue
+        // Get top results
         final int size = sortedLabels.size();
         for (int i = 0; i < size; ++i) {
             Map.Entry<String, Float> label = sortedLabels.poll();
@@ -229,11 +222,12 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
             topConfidence[i] = String.format("%.0f%%",label.getValue()*100);
         }
 
-        //initialize data for adapter
+        //  Initialize data for adapter
         ArrayList<String> topBreed = new ArrayList<String>();
         ArrayList<String> topBrConf = new ArrayList<String>();
         ArrayList<Integer> iconIds = new ArrayList<Integer>();
 
+        // Results are ranked ascending
         for(int i = RESULTS_TO_SHOW - 1; i >= 0; i--)
         {
             topBreed.add(topLables[i]);
@@ -253,7 +247,7 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
     }
 
 
-    // resizes bitmap to given dimensions
+    // Resizing bitmap
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
         int width = bm.getWidth();
         int height = bm.getHeight();
@@ -266,9 +260,11 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
         return resizedBitmap;
     }
 
+    // Item click listener in RecyclerView
     @Override
     public void onLearnClick(int position) {
 
+        // Check element that was clicked
         String breed;
         switch (position) {
             case 0:
@@ -283,8 +279,10 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
             default:
                 breed = null;
         }
-        Intent intent = new Intent(ClassifyActivity.this, InfoActivity.class);
-        intent.putExtra(BREED,breed);
-        startActivity(intent);
+
+        // Start InfoActivity and put breed-name to intent
+        Intent startInfoIntent = new Intent(ClassifyActivity.this, InfoActivity.class);
+        startInfoIntent.putExtra(BREED,breed);
+        startActivity(startInfoIntent);
     }
 }

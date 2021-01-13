@@ -166,11 +166,12 @@ class TFLiteClassifier(private val context: Context) {
 
         val pixels = IntArray(inputImageWidth * inputImageHeight)
         bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+        // Loop through all pixels
         var pixel = 0
         for (i in 0 until inputImageWidth) {
             for (j in 0 until inputImageHeight) {
                 val pixelVal = pixels[pixel++]
-
+                // Get rgb values from intValues where each int holds the rgb values for a pixel
                 byteBuffer.putFloat(((pixelVal shr 16 and 0xFF) - IMAGE_MEAN) / IMAGE_STD)
                 byteBuffer.putFloat(((pixelVal shr 8 and 0xFF) - IMAGE_MEAN) / IMAGE_STD)
                 byteBuffer.putFloat(((pixelVal and 0xFF) - IMAGE_MEAN) / IMAGE_STD)
