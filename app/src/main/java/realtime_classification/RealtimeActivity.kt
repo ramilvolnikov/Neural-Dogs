@@ -60,7 +60,7 @@ class RealtimeActivity : AppCompatActivity() {
         //Information about a display
         val metrics = DisplayMetrics().also { textureView.display.getRealMetrics(it) }
         val screenSize = Size(metrics.widthPixels, metrics.heightPixels)
-        val screenAspectRatio = Rational(1, 1)
+        val screenAspectRatio = Rational(9, 16)
 
         //Set up the Preview
         val previewConfig = PreviewConfig.Builder().apply {
@@ -77,7 +77,6 @@ class RealtimeActivity : AppCompatActivity() {
             textureView.surfaceTexture = it.surfaceTexture
             updateTransform()
         }
-
         //Set up the Analyzer
         val analyzerConfig = ImageAnalysisConfig.Builder().apply {
             // Use a worker thread for image analysis to prevent glitches
