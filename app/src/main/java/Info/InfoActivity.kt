@@ -72,6 +72,7 @@ class InfoActivity : AppCompatActivity() {
             }else {
                 Toast.makeText(applicationContext, "Please, check your connection!", Toast.LENGTH_SHORT)
                     .show()
+                finish()
             }
         else{
             val showInBrowser = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=$tmp"))
