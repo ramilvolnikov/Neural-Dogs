@@ -4,6 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.retrofitaplication.util.Constants.Companion.BASE_URL
 
+// Initialization retrofit
 object RetrofitInstance {
     private val retrofit by lazy {
         Retrofit.Builder()

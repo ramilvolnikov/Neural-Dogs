@@ -1,5 +1,8 @@
 import com.google.gson.annotations.SerializedName
 
+//Kotlin dog from server (POJO)
+//@SerializedName() - keys from JSON-data
+
 data class ServerDog (
 
 	@SerializedName("breeds") val breeds : List<Breeds>,

@@ -5,7 +5,7 @@ class Constants {
     {
         const val BASE_URL = "https://api.TheDogAPI.com/v1/"
 
-        //val -> var
+        // Default value
         var BREED_IDS = 1
     }
 }

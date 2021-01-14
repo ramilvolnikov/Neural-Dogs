@@ -24,9 +24,9 @@ import org.tensorflow.lite.examples.classification.R
 
 class InfoActivity : AppCompatActivity() {
     lateinit var viewModel : MainViewModel
-    val APP_PREFERENCES = "mysettings"
+    private val APP_PREFERENCES = "mysettings"
     lateinit var mSettings : SharedPreferences
-    val SP_KEY_FIRST_START = "spKeyFirstStart"
+    private val SP_KEY_FIRST_START = "spKeyFirstStart"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +61,10 @@ class InfoActivity : AppCompatActivity() {
 
 
 
-    fun showInfo()
+    private fun showInfo()
     {
-        val tmp = intent.getStringExtra(BREED);
-        BREED_IDS = mSettings!!.getInt(tmp.toString(),0)
+        val tmp = intent.getStringExtra(BREED)
+        mSettings.getInt(tmp.toString(),0).also { BREED_IDS = it }
         if (BREED_IDS != 0)
             if (isNetworkAvailable(this)) {
                 viewModel.getDogs(BREED_IDS)
@@ -83,9 +83,9 @@ class InfoActivity : AppCompatActivity() {
 
 
 
-    fun putPairs() {
+    private fun putPairs() {
 
-        val editor = mSettings!!.edit()
+        val editor = mSettings.edit()
 
         editor.putInt("Chihuahua", 0)
         editor.putInt("Japanese Spaniel", 140)
@@ -211,7 +211,7 @@ class InfoActivity : AppCompatActivity() {
         editor.apply()
     }
 
-    fun isNetworkAvailable(context: Context): Boolean {
+    private fun isNetworkAvailable(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = cm.activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected
