@@ -23,24 +23,33 @@ import org.tensorflow.lite.examples.classification.R
 
 
 class InfoActivity : AppCompatActivity() {
+
     lateinit var viewModel : MainViewModel
     private val APP_PREFERENCES = "mysettings"
     lateinit var mSettings : SharedPreferences
+
+    // Flag for checking first start application
     private val SP_KEY_FIRST_START = "spKeyFirstStart"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
+
+        // Checking first start
         if (mSettings.getBoolean(SP_KEY_FIRST_START,true)) {
             putPairs()
             mSettings.edit().putBoolean(SP_KEY_FIRST_START,false).apply()
         }
+
+        // Add observer
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this,viewModelFactory).get(MainViewModel::class.java)
         viewModel.myResponse.observe(this, Observer{ response ->
             if (response.isSuccessful) {
+
+                // Show information in activity elements
                 breeds_names.text = response.body()?.get(0)?.breeds?.get(0)?.name
                 bred_for.text = response.body()?.get(0)?.breeds?.get(0)?.bred_for
                 breed_group.text = response.body()?.get(0)?.breeds?.get(0)?.breed_group
@@ -63,11 +72,16 @@ class InfoActivity : AppCompatActivity() {
 
     private fun showInfo()
     {
+        // Get id by breed
         val tmp = intent.getStringExtra(BREED)
         mSettings.getInt(tmp.toString(),0).also { BREED_IDS = it }
+
         if (BREED_IDS != 0)
             if (isNetworkAvailable(this)) {
+                // Call getDogs from view model
                 viewModel.getDogs(BREED_IDS)
+
+                // Image overlaps progress bar
                 internet_image.visibility = View.VISIBLE
             }else {
                 Toast.makeText(applicationContext, "Please, check your connection!", Toast.LENGTH_SHORT)
@@ -75,6 +89,8 @@ class InfoActivity : AppCompatActivity() {
                 finish()
             }
         else{
+            // If there is no current breed on the server
+            // Open in browser google request
             val showInBrowser = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=$tmp"))
             startActivity(showInBrowser)
             finish()
@@ -83,7 +99,7 @@ class InfoActivity : AppCompatActivity() {
     }
 
 
-
+    // Put pairs: breed's names and their server ids to Sh Prefs file
     private fun putPairs() {
 
         val editor = mSettings.edit()
@@ -212,6 +228,7 @@ class InfoActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    // Checking internet connection
     private fun isNetworkAvailable(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = cm.activeNetworkInfo

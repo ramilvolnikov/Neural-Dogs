@@ -8,18 +8,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.tensorflow.lite.examples.classification.R
 
-class MyAdapter(private val breedValues: List<String>, private val confidenceValues: List<String>, private val iconIds: List<Int>, var onLearnListener : OnLearnListener): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+// Adapter for recycler view in ClassifyActivity
+class MyAdapter(private val breedValues: List<String>, private val confidenceValues: List<String>, private val iconIds: List<Int>, onLearnListener : OnLearnListener): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
+    // Item click listener
     var mOnLearnListener = onLearnListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item,parent,false)
         return ViewHolder(itemView, mOnLearnListener)
     }
 
     override fun getItemCount() = breedValues.size
 
-    override fun onBindViewHolder(holder: MyAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textView?.text = breedValues[position]
         holder.textView2?.text = confidenceValues[position]
         holder.icon?.setImageResource(iconIds[position])
@@ -40,7 +42,7 @@ class MyAdapter(private val breedValues: List<String>, private val confidenceVal
             this.onLearnListener = onLearnListener
         }
 
-
+        // Redirect onClick to click listener in interface OnLearnListener
         override fun onClick(p0: View?) {
             onLearnListener.onLearnClick(adapterPosition)
         }
