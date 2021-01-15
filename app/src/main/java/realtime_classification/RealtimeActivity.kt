@@ -12,6 +12,8 @@ import android.graphics.*
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import android.widget.Toast
 import androidx.camera.core.*
@@ -34,6 +36,11 @@ class RealtimeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_realtime)
+
+        // Full screen
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         //Checking permissions
         if (allPermissionsGranted()) {
@@ -74,7 +81,10 @@ class RealtimeActivity : AppCompatActivity() {
         val preview = Preview(previewConfig)
         //Add the camera preview to the TextureView
         preview.setOnPreviewOutputUpdateListener {
+            val parent = textureView.parent as ViewGroup
+            parent.removeView(textureView)
             textureView.surfaceTexture = it.surfaceTexture
+            parent.addView(textureView, 0)
             updateTransform()
         }
         //Set up the Analyzer

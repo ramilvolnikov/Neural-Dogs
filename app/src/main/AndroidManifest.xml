@@ -46,7 +46,7 @@
         <activity
             android:name="realtime_classification.RealtimeActivity"
             android:screenOrientation="portrait"
-            android:hardwareAccelerated="false">
+            android:hardwareAccelerated="true">
         </activity>
 
         <activity android:name="static_classification.ClassifyActivity"
