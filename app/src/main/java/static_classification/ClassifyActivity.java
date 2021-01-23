@@ -270,7 +270,6 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
     // Item click listener in RecyclerView
     @Override
     public void onLearnClick(int position) {
-
         // Check element that was clicked
         String breed;
         switch (position) {
@@ -286,7 +285,6 @@ public class ClassifyActivity extends AppCompatActivity implements MyAdapter.OnL
             default:
                 breed = null;
         }
-
         // Start InfoActivity and put breed-name to intent
         Intent startInfoIntent = new Intent(ClassifyActivity.this, InfoActivity.class);
         startInfoIntent.putExtra(BREED,breed);

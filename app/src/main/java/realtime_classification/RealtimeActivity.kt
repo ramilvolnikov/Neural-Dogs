@@ -55,7 +55,6 @@ class RealtimeActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
 
-        //Посмотрим позже
         tfLiteClassifier
             .initialize()
             .addOnSuccessListener { }

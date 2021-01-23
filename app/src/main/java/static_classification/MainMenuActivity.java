@@ -132,7 +132,7 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSION) {
             if (!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                Toast.makeText(getApplicationContext(),"This application needs read, write, and camera permissions to run. Application now closing.",Toast.LENGTH_LONG);
+                Toast.makeText(getApplicationContext(),"This application needs read, write, and camera permissions to run. Application now closing.",Toast.LENGTH_LONG).show();
                 System.exit(0);
             }
         }
@@ -149,7 +149,6 @@ public class MainMenuActivity extends AppCompatActivity {
             case GALLERY_REQUEST:
                 if(resultCode == RESULT_OK){
                     imageUri = data.getData();
-                    //startActivityForResult(data,GALLERY_REQUEST);
                 }
         }
         // if the camera activity is finished, obtained the uri, crop it to make it square, and send it to ClassifyActivity
@@ -164,7 +163,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         }
 
-        // if cropping acitivty is finished, get the resulting cropped image uri and send it to ClassifyActivity
+        // if cropping activity is finished, get the resulting cropped image uri and send it to ClassifyActivity
         else if(requestCode == Crop.REQUEST_CROP && resultCode == RESULT_OK){
             imageUri = Crop.getOutput(data);
             Intent classifyIntent = new Intent(MainMenuActivity.this, ClassifyActivity.class);
